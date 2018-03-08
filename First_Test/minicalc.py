@@ -1,9 +1,6 @@
 import math as m
 
-#
 # Print menu and input user command
-#
-
 def menuprint():
     """
     Documentations
@@ -33,6 +30,15 @@ def fdiv(num1,num2):
     result=num1/num2
     return result
 
+def flog(oper,num1,num2,rez):
+    fname="calc.log"
+    filelog=open(fname,"a")
+    strlog=str(num1)+oper+str(num2)+"="+str(rez)
+    #print(strlog)
+    filelog.write(strlog+"\n")
+    filelog.close
+    return
+
 # main
 avail_oper=['+','-','*','/','q']
 names_oper=["add","substract","multipy","devide"]
@@ -55,8 +61,22 @@ while True:
     print(idx_oper)
     print(names_oper[idx_oper])
 
-    num1=float(input("Enter a number 1: "))
-    num2=float(input("Enter a number 2: "))
+    #num1=float(input("Enter a number 1: "))
+    #num2=float(input("Enter a number 2: "))
+
+    try:
+        num1=input("Enter a number 1: ")
+        num1=float(num1)
+    except:
+        print("'"+str(num1)+"' is not number. try again")
+        continue
+
+    try:
+        num2=input("Enter a number 2: ")
+        num2=float(num2)
+    except:
+        print("'"+str(num2)+"' is not number. try again")
+        continue
     
     if user_input=="+":
         operation=fadd
@@ -66,5 +86,7 @@ while True:
         operation=fmul
     elif user_input=="/":
         operation=fdiv
-    
-    print("Answer : "+str(operation(num1,num2)))
+        
+    rez=operation(num1,num2)
+    flog(user_input,num1,num2,rez)
+    print("Answer : "+str(rez))
